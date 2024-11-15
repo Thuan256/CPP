@@ -35,6 +35,7 @@ int main() {
         }
     }
 
+
     ofstream out("LIS.out");
     out << a.size();
     out.close();

@@ -9,8 +9,6 @@ int main() {
     ifstream inp("DAYCON.INP");
     string line;
 
-    cout << line;
-
     getline(inp, line);
 
     stringstream ss(line);

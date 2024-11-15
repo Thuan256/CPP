@@ -31,22 +31,26 @@ int main() {
         while (left <= right) {
             int mid = (left + right) / 2;
 
+            cout << mid << ";";
+
             if (b[mid] + d <= num) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
             }
         }
-        if (left < b.size()) {
-            cout << left << ";" << endl;
+
+        if (left && left < b.size()) {
+            cout << left << ";;";
 
             b[left] = num;
         } else {
-            cout << num << ";;" << endl;
+            cout << num << ";;;" << endl;
             b.push_back(num);
         }
     }
 
+    cout << endl;
     for (auto x : b) cout << x << " ";
 
     ofstream out("STAIRSEQ.out");

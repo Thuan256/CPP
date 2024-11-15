@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -37,7 +38,17 @@ int main() {
             long long sum = a[i] + a[j];
 
             if (sum == a[k]) {
-                count++;
+                int count_i = 1, count_j = 1;
+
+                while (i + 1 < j && a[i] == a[i + 1]) {
+                    count_i++;
+                    i++;
+                }
+                while (j - 1 > i && a[j] == a[j - 1]) {
+                    count_j++;
+                    j--;
+                }
+                count += count_i * count_j;
                 i++;
                 j--;
             } else if (sum < a[k])

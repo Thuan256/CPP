@@ -33,6 +33,8 @@ int main() {
         while (left <= right) {
             int mid = (left + right) / 2;
 
+            cout << mid << ";";
+
             if (b[mid] + d <= num) {
                 left = mid + 1;
             } else {
@@ -40,16 +42,22 @@ int main() {
             }
         }
 
+<<<<<<< HEAD
         if (left < b.size()) {
             cout << left << ";" << endl;
+=======
+        if (left && left < b.size()) {
+            cout << left << ";;";
+>>>>>>> a4fe6c9f16707f1154d76cd3424c181ff0158779
 
             b[left] = num;
         } else {
-            cout << num << ";;" << endl;
+            cout << num << ";;;" << endl;
             b.push_back(num);
         }
     }
 
+    cout << endl;
     for (auto x : b) cout << x << " ";
 
     ofstream out("STAIRSEQ.out");

@@ -28,6 +28,8 @@ int main() {
     while (ss2 >> num) {
         int left = 0, right = b.size() - 1;
 
+        cout << left << " " << right << endl;
+
         while (left <= right) {
             int mid = (left + right) / 2;
 
@@ -37,6 +39,7 @@ int main() {
                 right = mid - 1;
             }
         }
+
         if (left < b.size()) {
             cout << left << ";" << endl;
 

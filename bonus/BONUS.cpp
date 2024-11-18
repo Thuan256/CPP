@@ -31,6 +31,14 @@ int main() {
         }
     }
 
+    for (const vector<int> vec : a) {
+        for (int x : vec) {
+            cout << x << " ";
+        }
+
+        cout << endl;
+    }
+
     for (int i = k - 1; i < n; i++) {
         for (int j = k - 1; j < n; j++) {
             int submatrix_sum = a[i][j];

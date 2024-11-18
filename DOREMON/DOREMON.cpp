@@ -1,76 +1,54 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
+#include <string>
+#include <vector>
 using namespace std;
-
-int main() {
-    ifstream inp("DOREMON.inp");
-
-    string line;
-    short n, k;
-
-    getline(inp, line);
-    inp.close();
-
-    stringstream ss(line);
-    ss >> n;
-    ss >> k;
+int daycon(vector<int>& ds, vector<vector<int>>& rs, int a[], int n) {
+    if (ds.size() == n) {
+        rs.push_back(ds);
+        return 0;
+    }
+    for (int i = 0; i < 2; i++) {
+        ds.push_back(a[i]);
+        daycon(ds, rs, a, n);
+        ds.pop_back();
+    }
 }
+int main() {
+    ifstream fileinput("DOREMON.INP");
+    string line;
+    vector<int> b;
+    getline(fileinput, line);
+    istringstream ss(line);
+    int num;
+    while (ss >> num) b.push_back(num);
 
-/*
+    int n = b[0], k = b[1];
 
-x 0 0 0
-1
-1
-1
+    fileinput.close();
 
-5 3
-10000 x i = 0; d = 5-0-1 = 4 > 3;
-01000 o i = 1; d = 5-1-1 = 3 = 3;
-00100 o i = 2; 
-00010
-00001 x
+    vector<int> ds;
+    vector<vector<int>> rs;
 
+    int a[2] = {0, 1};
+    long long d = 0;
 
-10001
-10010
-10100
-11000
-
-01001
-01010
-01100
-
-00101
-00110
-
-00011
-
-
-11001
-11010
-11100
-
-10101
-10110
-
-10011
-
-01101
-01110
-
-00111
-
-0010
-0011
-0100
-0110
-0101
-1001
-1010
-1011
-1100
-1101
-
-*/
+    daycon(ds, rs, a, n);
+    for (int i = 0; i < rs.size(); i++) {
+        vector<int> dp(n, 0);
+        int sl = 1;
+        for (int j = 0; j < rs[i].size(); j++) {
+            if (rs[i][j] == rs[i][j - 1])
+                dp[j] = dp[j - 1] + 1;
+            else
+                dp[j] = 1;
+            if (sl < dp[j]) sl = dp[j];
+        }
+        if (sl <= k) d++;
+    }
+    ofstream fileout("DOREMON.OUT");
+    fileout << d;
+    fileout.close();
+    return 0;
+}

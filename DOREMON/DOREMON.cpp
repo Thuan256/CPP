@@ -21,10 +21,11 @@ int main() {
     vector<int> b;
     getline(fileinput, line);
     istringstream ss(line);
-    int num;
-    while (ss >> num) b.push_back(num);
+    
+    short n,k;
 
-    int n = b[0], k = b[1];
+    ss >> n;
+    ss >> k;
 
     fileinput.close();
 
@@ -45,7 +46,14 @@ int main() {
                 dp[j] = 1;
             if (sl < dp[j]) sl = dp[j];
         }
-        if (sl <= k) d++;
+        if (sl <= k) {
+
+            for (int x: rs[i]) {
+                cout << x;
+            }
+            cout << endl;
+            d++;
+        }
     }
     ofstream fileout("DOREMON.OUT");
     fileout << d;

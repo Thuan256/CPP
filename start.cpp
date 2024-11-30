@@ -4,12 +4,7 @@ using namespace std;
 
 int main() {
 
-    cout << stoi("1");
-
-    ofstream outfile("input.txt");
-    for (int i = 1; i <= 1000; ++i) {
-        outfile << i << " ";
-    }
-    outfile.close();
+    string test = "12345";
+    test[0] = "6";
     return 0;
 }

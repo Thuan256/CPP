@@ -22,11 +22,16 @@ int main() {
 
     stringstream ss(line);
 
-    int a, b;
+    int a, b, k, count = 0;
     ss >> a;
     ss >> b;
+    ss >> k;
 
-    for (int i = a; i <=b; i++) {
-        if (sum_num(i) % )
-    }
+    for (int i = a; i <= b; i++) count += (sum_num(i) % k == 0 && i % k == 0);
+
+    ofstream out("CHIAHET.OUT");
+    out << count;
+    out.close();
+
+    return 0;
 }

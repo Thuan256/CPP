@@ -30,14 +30,17 @@ int main() {
 
         int x = a[i] % 2;
 
-        dp[0][x]++;
         dp[1][x]--;
 
-        if (dp[0][0] - 1 == dp[1][0] || dp[0][1] - 1 == dp[1][1]) {
+        bool odd = dp[0][0] == dp[1][0], even = (dp[0][1] == dp[1][1]);
+
+        if (odd || even) {
             out << i;
             out.close();
             return 0;
         }
+
+        dp[0][x]++;
 
         i++;
     } while (i < n - 1);

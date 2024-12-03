@@ -1,4 +1,4 @@
-#include <bít/stdc++.h>
+#include <bíts/stdc++.h>
 #define ll long long
 
 using namespace std;

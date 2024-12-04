@@ -1,58 +1,40 @@
 #include <bits/stdc++.h>
-#define ll long long
-
 using namespace std;
 
 const int mod = 1e9 + 7;
-ll dp[102][10];
+int dp[102][2][10];
+string num;
 
+int G(string::size_type id, int smaller, int last) {
+    if (id == num.size()) return 1;
+    if (dp[id][smaller][last] != -1) return dp[id][smaller][last];
 
-void generate_dp() {
+    int limit = smaller ? 9 : (num[id] - '0');
+    int res = 0;
 
-    for (int d = 0; d <= 9; d++) dp[1][d] = 1;
-
-    for (int pos = 2; pos <= 100; pos++) {
-        for (int last = 0; last <= 9; last++) {
-            for (int d = last; d <= 9; d++) {
-                dp[pos][d] = (dp[pos][d] + dp[pos - 1][d]) % mod;
-            }
-        }
+    for (int d = last; d <= limit; d++) {
+        res = (res + G(id + 1, smaller || (d < limit), d)) % mod;
     }
+
+    return dp[id][smaller][last] = res;
 }
 
-ll count_to(string limit) {
-    string::size_type n = limit.length();
-    ll total = 0;
+int count_to(string s) {
 
-    if (n == 1) return stoi(limit);
-
-    for (string::size_type len = 1; len < n; len++) {
-
-        for (int d = 1; d <= 9; d++) {
-            total = (total + dp[len][d]) % mod;
-        }
-    }
-
-    signed prev_d = 0;
-
-    for (string::size_type i = 0; i < n; i++) {
-        signed cur_d = limit[i] - '0';
-
-        for (signed lower_d = (i == 0 ? 1 : prev_d); lower_d < cur_d; lower_d++) {
-            total = (total + dp[n - 1][lower_d]) % mod;
-        }
-
-        prev_d = cur_d;
-    }
-
-    return total;
+    memset(dp, -1, sizeof(dp));
+    num = s;
+    return G(0, 0, 0);
 }
 
-ll cal_ans(string& a, string& b) {
+int main() {
+    string a, b;
+    ifstream inp("PLEASANT.inp");
+    ofstream out("PLEASANT.out");
+
+    getline(inp, a);
+    getline(inp, b);
 
     string a_minus_1 = a;
-    string b_plus_1 = b;
-
     for (int i = a_minus_1.length() - 1; i >= 0; i--) {
         if (a_minus_1[i] > '0') {
             a_minus_1[i]--;
@@ -61,57 +43,10 @@ ll cal_ans(string& a, string& b) {
             a_minus_1[i] = '9';
         }
     }
+    if (a_minus_1[0] == '0') a_minus_1.erase(0, 1);
 
-    for (int i = b_plus_1.length() - 1; i >= 0; i--) {
-        if (b_plus_1[i] < '9') {
-            b_plus_1[i]++;
-            break;
-        } else {
-            b_plus_1[i] = '0';
-        }
-    }
+    int result = (count_to(b) - count_to(a_minus_1) + mod) % mod;
 
-    if (a_minus_1[0] == '0'  && a_minus_1.length() > 1) a_minus_1.erase(0, 1);
-    if (b_plus_1[0] == '0') b_plus_1 = '1' + b_plus_1;
-
-    ll ans_b = count_to(b_plus_1);
-    ll ans_a = a == "1" ? 0 : count_to(a_minus_1);
-
-    cout << "ans_b: " << ans_b << ", ans_a: " << ans_a << endl;
-    cout << "a_minus_1: " << a_minus_1 << ", b_plus_1: " << b_plus_1 << endl;
-
-
-    return (ans_b - ans_a + mod) % mod;
-}
-
-void print_dp() {
-    for (int i = 1; i <= 10; i++) {
-        for (int j = 0; j <= 9; j++) {
-            cout << dp[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
-
-int main() {
-
-    ifstream inp("PLEASANT.inp");
-    ofstream out("PLEASANT.out");
-
-    string a,b;
-
-    getline(inp, a);
-    getline(inp, b);
-
-//    cout << a << " " << b << endl;
-
-    inp.close();
-
-    generate_dp();
-    print_dp();
-
-    out << cal_ans(a, b);
-    out.close();
+    out << result << endl;
     return 0;
 }
-

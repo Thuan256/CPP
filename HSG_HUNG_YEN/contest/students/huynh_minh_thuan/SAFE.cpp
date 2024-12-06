@@ -20,7 +20,7 @@ int main() {
     string::size_type i = 0, j = 0;
     int v[3] = {0, 0, 0};
 
-    while (j < n) {
+    for (int j = 0; j < n; ++j) {
         if (islower(S[j])) v[0]++;
         else if (isupper(S[j])) v[1]++;
         else if (isdigit(S[j])) v[2]++;
@@ -32,8 +32,6 @@ int main() {
             else if (isdigit(S[i])) v[2]--;
             i++;
         }
-
-        j++;
     }
 
     out << ans;

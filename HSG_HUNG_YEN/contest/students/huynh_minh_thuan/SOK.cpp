@@ -3,47 +3,43 @@
 
 using namespace std;
 
+ll count_missing(const vector<ll>& A, ll x) {
+    return x - (lower_bound(A.begin(), A.end(), x + 1) - A.begin());
+}
+
+ll find_kth_missing(const vector<ll>& A, ll k) {
+    ll left = 1, right = 1e18, result = -1;
+
+    while (left <= right) {
+        ll mid = left + (right - left) / 2;
+        if (count_missing(A, mid) >= k) {
+            result = mid;
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return result;
+}
+
 int main() {
-    ifstream inp("SOK.inp");
-    ofstream out("SOK.out");
+    ifstream inp("SOK.INP");
+    ofstream out("SOK.OUT");
 
     ll n, t;
     inp >> n >> t;
 
-    vector<ll> a(n), queries(t), missing;
-    set<ll> ap;
-
-    for (ll i = 0; i < n; i++) {
-        inp >> a[i];
-        ap.insert(a[i]);
+    vector<ll> A(n);
+    for (ll i = 0; i < n; ++i) {
+        inp >> A[i];
     }
 
-    ll max_k = LLONG_MIN;
+    sort(A.begin(), A.end());
 
-    for (ll i = 0; i < t; i++) {
-        inp >> queries[i];
-        max_k = max(queries[i], max_k);
-    }
-
-    ll max_ap = *ap.crbegin();
-    ll tmp = ceil((max_ap * 2 + 1) / 2);
-
-    max_k = min(tmp, max_k);
-
-    cout << max_k;
-
-    ll cur = 1;
-
-    while (missing.size() < max_k) {
-        if (ap.find(cur) == ap.end()) {
-            missing.push_back(cur);
-        }
-        cur++;
-    }
-
-    for (ll k: queries) {
-
-        out << missing[min(max_k, k) - 1] << endl;
+    while (t--) {
+        ll k;
+        inp >> k;
+        out << find_kth_missing(A, k) << "\n";
     }
 
     inp.close();

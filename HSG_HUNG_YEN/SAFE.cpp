@@ -32,7 +32,6 @@ int main() {
             else if (isdigit(S[i])) v[2]--;
             i++;
         }
-
         j++;
     }
 

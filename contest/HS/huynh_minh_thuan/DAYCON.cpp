@@ -1,52 +1,53 @@
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <vector>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int main() {
-    ifstream inp("DAYCON.INP");
-    string line;
+vector<bool> eratosthenes(int n) {
 
-    cout << line;
+    vector<bool> primes(n + 1, true);
+    primes[0] = primes[1] = false;
 
-    getline(inp, line);
-
-    stringstream ss(line);
-
-    int n, m;
-    ss >> n;
-    ss >> m;
-
-    vector<int> a(n);
-
-    getline(inp, line);
-    inp.close();
-
-    stringstream ss1(line);
-
-    for (int i = 0; i < n; i++) ss1 >> a[i];
-
-    int left = 0, right = 0;
-    long long sum = 0, count = 0;
-
-    while (right < n) {
-        sum += a[right];
-
-        while (sum > m && left <= right) {
-            sum -= a[left];
-            left++;
+    for (int p = 2; p * p <= n; p++) {
+        if (primes[p]) {
+            for (int i = p * p; i <= n; i += p) {
+                primes[i] = false;
+            }
         }
-
-        count += (right - left + 1);
-        right++;
     }
 
-    ofstream out("DAYCON.OUT");
+    return primes;
+}
 
-    out << count;
+int main() {
+    ifstream inp("DAYCON.inp");
+    ofstream out("DAYCON.out");
+
+    int n;
+    inp >> n;
+    int a[n];
+
+    int ans = -1, last = -1;
+
+    vector<bool> sieves = eratosthenes(2e7);
+
+    for (int i = 0; i < n; i++) {
+        inp >> a[i];
+
+        if (sieves[a[i]]) {
+            if (last != -1) {
+
+                int len = i - last + 1;
+
+                ans = (ans == -1) ? len : min(len, ans);
+            }
+            last = i;
+        }
+    }
+
+    out << ans;
+    inp.close();
     out.close();
 
     return 0;
+
 }

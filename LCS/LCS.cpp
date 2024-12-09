@@ -17,20 +17,17 @@ int main() {
     int m = s1.length();
     int n = s2.length();
 
-    vector<int> pre(n + 1, 0);
-    vector<int> cur(n + 1, 0);
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
 
     int ans = 0;
 
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
             if (s1[i - 1] == s2[j - 1]) {
-                cur[j] = pre[j - 1] + 1;
-                ans = max(cur[j], ans);
-            } else cur[j] = 0;
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+                ans = max(dp[i][j], ans);
+            } else dp[i][j] = 0;
         }
-
-        pre = cur;
     }
 
     out << ans;

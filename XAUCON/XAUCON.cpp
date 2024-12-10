@@ -10,10 +10,10 @@ int main() {
     inp >> s;
 
     vector<char> dp;
-    dp.push_back(a[0]);
+    dp.push_back(s[0]);
 
     for (int i = 1; i < s.length(); i++) {
-        if (dp.back() < s[i]) {
+        if (dp.back() <= s[i]) {
             dp.push_back(s[i]);
         } else {
             int low = lower_bound(dp.begin(), dp.end(), s[i]) - dp.begin();

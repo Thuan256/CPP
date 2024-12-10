@@ -16,6 +16,19 @@ int main() {
 
         string::size_type last = -1;
 
+<<<<<<< HEAD
+        for (string::size_type i = 0; i < name.length(); i++) {
+            char c = name[i];
+
+            if (c == 'W' || c == 'A' || c == 'R') {
+                if (last != -1) {
+                    int len = i - last - 1;
+
+                    if (len > ans.first) ans = {len, 1};
+                    else if (len == ans.first) ans.second++;
+                }
+
+=======
         for (string::size_type i = 0; i <= name.length(); i++) {
             char c = name[i];
 
@@ -24,6 +37,7 @@ int main() {
 
                 if (len > ans.first) ans = {len, 1};
                 else if (len == ans.first) ans.second++;
+>>>>>>> 0da32ed0cc37bffb3b75ed6a832731541e31a52b
                 last = i;
             }
         }

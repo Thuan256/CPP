@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define ll long long
 
 using namespace std;
 
@@ -9,20 +10,20 @@ int main() {
     string str;
     getline(inp, str);
 
-    int n = stoi(str), s;
+    ll n = stoi(str), s;
 
     getline(inp, str);
     inp >> s;
 
     inp.close();
 
-    map<int, bool> mp;
+    map<ll, ll> mp;
 
-    int i = 0, ans = 0;
+    ll i = 0, ans = 0;
 
     while (i < str.size()) {
 
-        int num = 0;
+        ll num = 0;
 
         if (isdigit(str[i])) {
             int sign = i > 0 && str[i - 1] == '-' ? -1 : 1;
@@ -34,8 +35,8 @@ int main() {
 
             num *= sign;
 
-            if (mp[num]) ans++;
-            mp[s - num] = true;
+            ans += mp[num];
+            mp[s - num]++;
 
         } else i++;
     }

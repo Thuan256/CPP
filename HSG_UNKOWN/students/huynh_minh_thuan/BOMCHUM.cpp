@@ -11,7 +11,7 @@ vector<bool> eratosthenes(int n) {
     for (int p = 2; p * p <= n; p++)
         if (primes[p])
             for (int i = p * p; i <= n; i += p)
-                primes[p] = false;
+                primes[i] = false;
 
     return primes;
 }
@@ -30,27 +30,19 @@ int main() {
     for (int i = 0; i < n; i ++) {
         inp >> a[i];
 
-        ll x = a[i], sum = 1;
+        ll x = a[i], sum = x + (x != 1);
 
-        for (int p = 2; i < sieves.size(); p++) {
-            if (sieves[p]) {
-                if (p * p > x) break;
+        if (!(x < 10e5 && sieves[x])) {
+            for (int dvs = 2; dvs <= sqrt(x); dvs++) {
+                if (x % dvs == 0) {
+                    ll q = x / dvs;
 
-                if (x % p == 0) {
-                    ll power_sum = 1, pow = 1;
-
-                    while (x % p == 0) {
-                        x /= p;
-                        pow *= p;
-                        power_sum += pow;
-                    }
-
-                    sum *= power_sum;
+                    if (q == dvs) sum += dvs;
+                    else sum += dvs + q;
                 }
             }
         }
 
-        if (x > 1) sum *= (x + 1);
         out << sum << " ";
 
     }

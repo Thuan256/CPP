@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+const int mod = 1e9 + 7;
 
 using namespace std;
 
@@ -6,24 +7,25 @@ int main() {
     ifstream inp("BAI4.inp");
     ofstream out("BAI4.out");
 
-    int n, q;
+    int n, q, i, j;
+    static int ans[1001][1001];
     inp >> n >> q;
 
-    for (int _ = 0; _ < q; _++) {
+    ans[0][1] = 1;
+
+    for (i = 1; i <= n; i++)
+        for (j = 1; j <= n; j++)
+            ans[i][j] = (ans[i - 1][j] % mod + ans[i][j - 1] % mod) % mod;
+
+
+    for (i = 0; i < q; i++) {
         int u, v;
         inp >> u >> v;
 
         int a = n - u + 1;
         int b = n - v + 1;
 
-        vector<vector<int>> matrix(a, vector<int>(b, 1));
-
-        for (int i = 1; i <= a - 1; i++) {
-            for (int j = 1; j <= b - 1; j++) {
-                matrix[i][j] = matrix[i - 1][j] + matrix[i][j - 1];
-            }
-        }
-        out << matrix[a - 1][b - 1] << endl;
+        out << ans[a][b] << endl;
     }
 
     inp.close();

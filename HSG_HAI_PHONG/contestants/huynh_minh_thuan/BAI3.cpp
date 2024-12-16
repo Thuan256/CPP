@@ -1,40 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const long long INF = 1e15;
+struct task {
+    int a, b, c, diff;
+};
+
+task tasks[200001];
+
+bool compare(task x, task y) {
+    return (x.diff < y.diff);
+}
 
 int main() {
-    ifstream infile("BAI3.INP");
-    ofstream outfile("BAI3.OUT");
+    ifstream inp("BAI3.inp");
+    ofstream out("BAI3.out");
 
-    int m, n;
-    infile >> m >> n;
-    int total = m + n;
+    int m, n, i;
+    inp >> m >> n;
 
-    vector<int> a(total + 1), b(total + 1), c(total + 1);
+    for (i = 1; i <= m + n; i++) {
+        inp >> tasks[i].a >> tasks[i].b >> tasks[i].c;
 
-    for (int i = 1; i <= total; ++i) {
-        infile >> a[i] >> b[i] >> c[i];
+        if (tasks[i].c == 0)
+            tasks[i].diff = tasks[i].a - tasks[i].b;
+        else if (tasks[i].c == 1)
+            tasks[i].diff = INT_MIN;
+        else
+            tasks[i].diff = INT_MAX;
     }
+    sort(tasks + 1, tasks + m + n + 1, compare);
 
-    vector<vector<long long>> dp(total + 1, vector<long long>(m + 1, INF));
+    long long ans = 0;
+    for (i = 1; i <= m; i++) ans += tasks[i].a;
 
-    dp[0][0] = 0;
+    for (i = m + 1; i <= m + n; i++) ans += tasks[i].b;
 
-    for (int i = 1; i <= total; ++i) {
-        for (int j = 0; j <= m; ++j) {
-            if (c[i] == 1) {
-                if (j > 0) dp[i][j] = dp[i-1][j-1] + a[i];
-            } else if (c[i] == 2) {
-                dp[i][j] = dp[i-1][j] + b[i];
-            } else {
-                if (j > 0) dp[i][j] = min(dp[i][j], dp[i-1][j-1] + a[i]);
-                dp[i][j] = min(dp[i][j], dp[i-1][j] + b[i]);
-            }
-        }
-    }
+    out << ans;
 
-    outfile << dp[total][m] << endl;
+    inp.close();
+    out.close();
 
     return 0;
 }

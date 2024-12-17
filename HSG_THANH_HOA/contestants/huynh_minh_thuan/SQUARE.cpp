@@ -13,8 +13,7 @@ int main() {
     ifstream inp("SQUARE.inp");
     ofstream out("SQUARE.out");
 
-    int m, n, k, i, j, x, y, ans = INT_MIN, min_uniq = INT_MAX;
-    map<int, int> freq;
+    int m, n, k, i, j, x, y, ans = INT_MAX, min_uniq = INT_MAX;
     inp >> m >> n >> k;
 
     vector<vector<int>> a(m + 1, vector<int>(n + 1, 0)), dp(m + 1, vector<int>(n + 1, 0));
@@ -40,10 +39,10 @@ int main() {
         for (int j = k; j <= n; j++) {
             int sum = dp[i][j] + dp[i - k][j - k] - dp[i - k][j] - dp[i][j - k];
 
-//            cout << uniq << " " << sum << endl;
-
-            if (uniq < min_uniq) ans = sum;
-            else if (uniq = min_uniq) ans = max(ans, sum);
+            if (uniq < min_uniq || (uniq == min_uniq && sum < ans)) {
+                min_uniq = uniq;
+                ans = sum;
+            }
 
             if ( j < n) {
                 for (x = i - k + 1; x <= i; x++) {
@@ -59,7 +58,6 @@ int main() {
     }
 
     out << ans;
-
     out.close();
     inp.close();
 

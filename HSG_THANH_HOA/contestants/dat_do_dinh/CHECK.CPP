@@ -1,11 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-int daycon(int i,vector<int>& b,long long sum,vector<int>& ds)
+void daycon(int i,vector<int>& b,long long sum,vector<int>& ds)
 {
     if (i==b.size())
     {
         ds.push_back(sum);
-        return 0;
     }
     else
     {

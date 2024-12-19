@@ -6,7 +6,7 @@ struct RNA {
 };
 
 RNA _count(string str) {
-    RNA result;
+    RNA result = {0, 0};
 
     for (char chr: str) {
         result.c += (chr == 'C');
@@ -36,12 +36,12 @@ int main() {
         int point = RNA_vaccine.c * RNA_virus.g + RNA_vaccine.g * RNA_virus.c;
 
         if (point > max_point) {
-            ans = i + 1;
+            ans = i;
             max_point = point;
         }
     }
 
-    out << ans;
+    out << ans + 1 << endl;
 
     inp.close();
     out.close();

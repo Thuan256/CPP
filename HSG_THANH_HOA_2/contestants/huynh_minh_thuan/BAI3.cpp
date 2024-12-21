@@ -10,7 +10,8 @@ int main() {
     int n, k;
     inp >> n >> k;
 
-    ll a[n], ans = 0;
+    ll ans = 0;
+    vector<ll> a(n);
     vector<vector<ll>> ranges(k);
 
     for (int i = 0; i < n; i++) {
@@ -24,7 +25,7 @@ int main() {
         ll mid = range[range.size() / 2];
 
         for (ll val: range) {
-            ans += abs(val - mid);
+            ans += abs(mid - val);
         }
     }
 

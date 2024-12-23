@@ -21,7 +21,7 @@ int main() {
     vector<int> b;
     getline(fileinput, line);
     istringstream ss(line);
-    
+
     short n,k;
 
     ss >> n;

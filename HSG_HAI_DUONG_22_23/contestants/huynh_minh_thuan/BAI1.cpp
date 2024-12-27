@@ -11,9 +11,7 @@ int main() {
 
     inp >> a >> alpha >> h;
 
-    float ans = h + a * tan(alpha * 3.141592 / 180);
-
-
+    double ans = h + a * tan(alpha * 3.14159265359 / 180.0);
 
     out << fixed << setprecision(3) << ans;
 

@@ -1,7 +1,11 @@
 #include <bits/stdc++.h>
+using namespace std;
+
+#define fmax 1000007
+#define NAME ""
+#define sync ios_base::sync_with_stdio(0); cin.tie(0);
 #define ll long long
 
-using namespace std;
 
 int main() {
     ifstream inp("BAI3.inp");
@@ -10,22 +14,20 @@ int main() {
     int n, m;
     inp >> n >> m;
 
-    vector<ll> a(n);
+    int a[n + 1];
+    ll ps[n + 1];
+
+    ps[0] = 0;
+
     ll ans = 0;
 
-    for (int i = 0; i < n; i++) inp >> a[i];
+    for (int i = 1; i <= n; i++) {
+        inp >> a[i];
+        ps[i] = ps[i - 1] + a[i];
+    }
 
-    while (m--) {
-
-        int last = a.size() - 1;
-
-        if (a[0] > a[last]) {
-            ans += a[0];
-            a.erase(a.begin());
-        } else {
-            ans += a[last];
-            a.pop_back();
-        }
+    for (int L = 0; L <= m; L++) {
+        ans = max(ans, ps[L] + (ps[n] - ps[n - (m - L)]));
     }
 
     out << ans;
@@ -35,3 +37,4 @@ int main() {
 
     return 0;
 }
+

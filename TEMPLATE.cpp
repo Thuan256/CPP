@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define NAME "BAI4"
+#define NAME ""
 
 #define limit 1000007
 #define ll long long
@@ -10,25 +10,9 @@ using namespace std;
 #define speedup ios_base::sync_with_stdio(0); cin.tie(0);
 #define sync freopen(NAME".inp", "r", stdin); freopen(NAME".out", "w", stdout);
 
-
-int n;
-ll ans = 0;
-
 int main() {
 
     speedup sync
-
-    cin >> n;
-
-    FOR(x, 1, n - 2) {
-        FOR(y, x+1, n - 1) {
-            FOR(z, y+1, n) {
-                ans += x + y + z == n;
-            }
-        }
-    }
-
-    cout << ans;
 
     return 0;
 }

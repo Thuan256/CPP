@@ -1,0 +1,28 @@
+const ll MAX = 1e9+7;
+const int mod = (int)1e9 + 7; // la so nguyen to
+ll gt[fmax], inv[fmax];
+
+ll powd(ll a, ll n) { // tinh luy thua nhanh
+    ll res = 1;
+    while (n) {
+        if (n & 1) res = res * a % mod;
+        a = a * a % mod;
+        n >>= 1;
+    }
+    return res;
+}
+
+void prep(int maxN) { // chuan bi mang giai thua va nghich dao
+    gt[0]=1LL;
+    for (ll i=1; i<=maxN; i++) {
+        gt[i]=(gt[i-1]*i)%mod;
+    }
+    inv[maxN] = powd(gt[maxN],mod-2);
+    for(ll i = maxN-1; i >= 0; --i) {
+        inv[i] = inv[i+1] * (i+1) % mod;
+    }
+}
+ 
+ll ckn(int k, int n) { // k < n, tinh to hop chap k cua n
+    return ((gt[n]*inv[k]%mod)*inv[n-k])%mod;
+} 

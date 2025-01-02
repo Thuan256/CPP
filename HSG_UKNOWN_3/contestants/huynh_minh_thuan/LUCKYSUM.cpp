@@ -12,7 +12,7 @@ using namespace std;
 #define sync freopen(NAME".inp", "r", stdin); freopen(NAME".out", "w", stdout);
 
 int L, R;
-ull ans = 0;
+ll ans = 0;
 
 int main() {
 
@@ -22,10 +22,9 @@ int main() {
 
     cin >> L >> R;
 
-    while (true) {
-        if (num.size() == 10) break;
+    while (num.size() <= 10) {
 
-        int x = stoi(num);
+        ll x = stoll(num);
 
         if (x >= R) {
             ans += (R - L + 1) * x;
@@ -36,7 +35,6 @@ int main() {
         }
 
         FOD (i, num.size() - 1, 0) {
-
             if (num[i] == '4') {
                 num[i] += 3;
                 break;

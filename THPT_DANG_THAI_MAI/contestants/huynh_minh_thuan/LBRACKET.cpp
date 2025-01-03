@@ -5,6 +5,9 @@ using namespace std;
 
 #define limit 1000007
 #define ll long long
+#define fi first
+#define se second
+#define pb push_back
 #define ull unsigned long long
 #define FOD(i,b,a) for (int i = (int) b; i >= (int) a; i--)
 #define FOR(i,a,b) for (int i = (int) a; i <= (int) b; i++)
@@ -25,11 +28,12 @@ int main() {
     while (R <= s.size()) {
 
         if (s[R - 1] == ')') {
-            if (p.first) p.second++;
+            if (p.fi) p.se++;
             else L = R;
-        } else p.first++;
+        } else p.fi++;
 
-        if (p.first && p.second && p.first == p.second) {
+        if (p.fi && p.se && p.fi == p.se) {
+
             int _L = L;
 
             if (L == last) {
@@ -37,8 +41,8 @@ int main() {
             } else last = R;
 
             if (R - _L > ans) {
-                ans = R - _L ;
-                ans_L = _L + 1;
+                ans = R - _L + 1;
+                ans_L = _L;
                 ans_R = R;
             }
             p = {0, 0};

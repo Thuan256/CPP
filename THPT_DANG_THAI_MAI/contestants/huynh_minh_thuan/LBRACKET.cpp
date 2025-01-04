@@ -15,7 +15,7 @@ using namespace std;
 #define sync freopen(NAME".inp", "r", stdin); freopen(NAME".out", "w", stdout);
 
 string s;
-int last = -1, L = 1, R = 1, ans_L, ans_R, ans, i = 1;
+int last = 0, L = -1, R = -1, ans = 0;
 pair<int, int> p;
 
 int main() {
@@ -25,48 +25,46 @@ int main() {
     string s;
     cin >> s;
 
-    while (L <= s.size()) {
+    FOR (i, 0, s.size() - 1) {
+        if (s[i] == '(') p.fi++;
+        else p.se++;
 
-        if (s[L - 1] == '(') {
-            p.fi++;
+        if (p.fi == p.se) {
+            int len = p.se * 2;
 
-            R = L + 1;
-
-            while (R <= s.size() && s[R] == ')' && p.se <= p.fi) {
-                p.se++;
-                R++;
+            if (len > ans) {
+                ans = len;
+                L = last;
+                R = i;
             }
-
-            cout << R - L + 1 << endl << L << " " << R << endl;
+        } else if (p.fi < p.se) {
+            p = {0, 0};
+            last = i + 1;
         }
-        L++;
-
-//        if (s[R - 1] == ')') {
-//            if (p.fi) p.se++;
-//            else L = R;
-//        } else p.fi++;
-//
-//        if (p.fi && p.se && p.fi == p.se) {
-//
-//            int _L = L;
-//
-//            if (L == last) {
-//                _L = last;
-//            } else last = R;
-//
-//            if (R - _L > ans) {
-//                ans = R - _L + 1;
-//                ans_L = _L;
-//                ans_R = R;
-//            }
-//            p = {0, 0};
-//            L = R;
-//
-//        }
-//        R++;
     }
 
-//    cout << ans << endl << ans_L << " " << ans_R;
+    last = s.size() - 1;
+    p = {0, 0};
+
+    FOD (i, s.size() - 1, 0) {
+        if (s[i] == '(') p.fi++;
+        else p.se++;
+
+        if (p.fi == p.se) {
+            int len = p.se * 2;
+
+            if (len > ans) {
+                ans = len;
+                L = i;
+                R = last;
+            }
+        } else if (p.fi > p.se) {
+            p = {0, 0};
+            last = i - 1;
+        }
+    }
+
+    cout << ans << endl << ++L << " " << ++R;
 
     return 0;
 }

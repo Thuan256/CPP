@@ -22,12 +22,14 @@ int main() {
 
     cin >> n;
 
-    while (n > 0) {
+    while (n != 0) {
         num += n % 10;
         n /= 10;
     }
 
-    if (sqrt(num) * sqrt(num) == num) cout << num;
+    int sr = sqrt(num);
+
+    if (sr * sr == num) cout << num;
     else cout << num % 11;
 
     return 0;

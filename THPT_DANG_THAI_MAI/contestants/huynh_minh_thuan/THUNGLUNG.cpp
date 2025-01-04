@@ -14,19 +14,34 @@ using namespace std;
 #define speedup ios_base::sync_with_stdio(0); cin.tie(0);
 #define sync freopen(NAME".inp", "r", stdin); freopen(NAME".out", "w", stdout);
 
-int N, V, dp[limit], H[limit], T[limit];
+int n, v, H[limit], T[limit], ans, maxH;
+ll str;
 
 int main() {
 
     speedup sync
 
-    cin >> N >> V;
+    cin >> n >> v;
 
-    FOR (i, 1, N) cin >> H[i];
-    FOR (i, 1, N) cin >> T[i];
+    FOR (i, 1, n) cin >> H[i], maxH = max(maxH, H[i]);
+    FOR (i, 1, n) cin >> T[i];
 
-    cout << -1;
+    str = H[1];
+    ans = T[1];
 
-    return 0;
+    FOR (i, 2, n) {
+        if (str > maxH) {
+            if (ans <= v) {
+                cout << ans;
+                return 0;
+            } else {
+                cout << -1;
+                return 0;
+            }
+        } else {
+            str += H[i];
+            ans += T[i];
+        }
+    }
 }
 

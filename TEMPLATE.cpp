@@ -3,7 +3,7 @@ using namespace std;
 
 #define NAME ""
 
-#define limit 1000007
+#define oo 1000007
 #define ll long long
 #define fi first
 #define se second
@@ -20,4 +20,3 @@ int main() {
 
     return 0;
 }
-

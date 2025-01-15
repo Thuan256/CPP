@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define NAME "dijkstra"
+
+#define oo 100007
+#define ll long long
+#define fi first
+#define se second
+#define pb push_back
+#define ull unsigned long long
+#define FOD(i,b,a) for (int i = (int) b; i >= (int) a; i--)
+#define FOR(i,a,b) for (int i = (int) a; i <= (int) b; i++)
+#define speedup ios_base::sync_with_stdio(0); cin.tie(0);
+#define sync freopen(NAME".inp", "r", stdin); freopen(NAME".out", "w", stdout);
+
+int n, m;
+vector<pair<int, int>> adj[oo];
+
+void dijkstra(int s) {
+    vector<ll> d(n + 1, LLONG_MAX);
+    d[s] = 0;
+
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> q;
+
+    q.push({0, s});
+
+    while (!q.empty()) {
+        pair<int, int> top = q.top(); q.pop();
+
+        int w = top.fi, u = top.se;
+
+        if (w > d[u]) continue;
+
+        for (auto it: adj[u]) {
+            int v = it.fi, w = it.se;
+
+            if (d[v] > d[u] + w) {
+                d[v] = d[u] + w;
+                q.push({d[v], v});
+            }
+        }
+    }
+
+    FOR (i, 1, n) cout << d[i] << " ";
+}
+
+int main() {
+
+    speedup sync
+
+    cin >> n >> m;
+
+    FOR (i, 1, m) {
+        int a, b, c;
+        cin >> a >> b >> c;
+
+        adj[a].pb({b, c});
+    }
+
+    dijkstra(1);
+
+    return 0;
+}
+

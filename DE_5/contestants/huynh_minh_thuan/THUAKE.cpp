@@ -27,7 +27,7 @@ int _find(int i) {
     return 0;
 }
 
-void trans(int i, int k) {
+void trans(int i, int k)  {
     diff = abs(s[i] - s[3 - i] - 2 * a[k]);
     x[k] = 3 - i;
     s[i] -= a[k];
@@ -52,8 +52,8 @@ bool cal(int &u, int &v) {
 }
 
 void solve() {
-    bool stop = false;
 
+    bool stop = false;
     while (!stop) {
         stop = true;
 
@@ -68,17 +68,18 @@ void solve() {
         }
 
         if (stop) {
-
             int u, v;
 
             if (cal(u, v)) {
                 trans(1, u);
                 trans(2, v);
+
                 stop = false;
             }
         }
     }
 }
+
 int main() {
 
     speedup sync
@@ -90,11 +91,9 @@ int main() {
     }
 
     --n;
-
     solve();
 
     cout << s[1] << " " << s[2] << " " << diff << '\n';
-
     FOR (i, 1, n) if (x[i] == 1) cout << i << " ";
     cout << '\n';
     FOR (i, 1, n) if (x[i] == 2) cout << i << " ";

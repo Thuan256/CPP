@@ -3,7 +3,7 @@ using namespace std;
 
 #define NAME "THUAKE"
 
-#define limit 1000007
+#define oo 100007
 #define ll long long
 #define fi first
 #define se second
@@ -14,53 +14,90 @@ using namespace std;
 #define speedup ios_base::sync_with_stdio(0); cin.tie(0);
 #define sync freopen(NAME".inp", "r", stdin); freopen(NAME".out", "w", stdout);
 
-int n = 1, a[limit], sum;
-bool dp[limit], selected[limit];
-vector<ll> trace[limit];
+int n = 1, diff, a[oo], x[oo], s[3];
 
+int _find(int i) {
+    FOR (k, 1, n) {
+        if (x[k] == i) {
+            if (diff > abs(s[i] - s[3 - i] - 2 * a[k])) {
+                return k;
+            }
+        }
+    }
+    return 0;
+}
+
+void trans(int i, int k) {
+    diff = abs(s[i] - s[3 - i] - 2 * a[k]);
+    x[k] = 3 - i;
+    s[i] -= a[k];
+    s[3 - i] += a[k];
+}
+
+bool cal(int &u, int &v) {
+    FOR (i, 1, n) {
+        if (x[i] == 1) {
+            FOR (j, 1, n) {
+                if (x[j] == 2) {
+                    if (diff > abs(s[1] - s[2] - 2 * (a[i] - a[j]))) {
+                        u = i;
+                        v = j;
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+void solve() {
+    bool stop = false;
+
+    while (!stop) {
+        stop = true;
+
+        FOR (i, 1, 2) {
+            int k = _find(i);
+
+            if (k) {
+                trans(i, k);
+                stop = false;
+                break;
+            }
+        }
+
+        if (stop) {
+
+            int u, v;
+
+            if (cal(u, v)) {
+                trans(1, u);
+                trans(2, v);
+                stop = false;
+            }
+        }
+    }
+}
 int main() {
 
     speedup sync
 
-    while (cin >> a[n]) sum += a[n++];
-
-    n--;
-
-    dp[0] = true;
-
-
-    sort(a, a + n);
-
-    FOR (i, 1, n) {
-        FOD (j, sum / 2, a[i]) {
-            if (dp[j - a[i]]) {
-                dp[j] = true;
-                trace[j] = trace[j - a[i]];
-                trace[j].pb(i);
-            }
-        }
+    while (cin >> a[n]) {
+        diff = s[1] += a[n];
+        x[n] = 1;
+        n++;
     }
 
-    int p1, p2, diff;
+    --n;
 
-    FOD (i, sum / 2, 0) {
-        if (dp[i]) {
+    solve();
 
-            p1 = i;
-            p2 = sum - p1;
-            diff = abs(p1 - p2);
+    cout << s[1] << " " << s[2] << " " << diff << '\n';
 
-            break;
-        }
-    }
-
-    cout << p1 << " " << p2 << " " << diff << endl;
-
-    for (int idx: trace[p1]) cout << idx << " ", selected[idx] = true;
-
-    cout << endl;
-
-    FOR (i, 1, n) if (!selected[i]) cout << i << " ";
+    FOR (i, 1, n) if (x[i] == 1) cout << i << " ";
+    cout << '\n';
+    FOR (i, 1, n) if (x[i] == 2) cout << i << " ";
 
     return 0;
 }
